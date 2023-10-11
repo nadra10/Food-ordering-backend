@@ -9,7 +9,8 @@ const db = mongoose.connection;
 const userRouter = require("./routes/api/users");
 const port = process.env.PORT || 3001;
 const app = express();
-const config = require('./config/seed');
+
+
 
 
 
@@ -51,9 +52,12 @@ app.use('/api/orders', ensureLoggedIn, require('./routes/api/orders'));
 
 
 //catch all
-app.get('/*', function(req, res) {
-    res.sendFile(path.join(__dirname, 'build', 'index.html'));
-  });
+// app.get('/*', function(req, res) {
+//     res.sendFile(path.join(__dirname, 'build', 'index.html'));
+//   });
+app.use((req, res) => {
+  res.status(404).json({ message: 'Not Found' });
+});
 
 
 
