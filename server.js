@@ -9,6 +9,7 @@ const db = mongoose.connection;
 const userRouter = require("./routes/api/users");
 const port = process.env.PORT || 3001;
 const app = express();
+const cors = require('cors');
 
 
 
@@ -26,7 +27,9 @@ db.on("connected", () => {
 app.use(logger('dev'));
 app.use(express.json());
 
-
+app.use(cors({
+  origin: 'http://localhost:3000'
+}));
 // Configure both serve-favicon & static middleware
 // to serve from the production 'build' folder
 // app.use(favicon(path.join(__dirname, 'build', 'favicon.ico')));
@@ -35,6 +38,8 @@ app.use(express.json());
 app.use(require("./config/checkToken"));
 
 app.use("/api/users", userRouter);
+
+
 
 
 //routs
